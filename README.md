@@ -12,6 +12,10 @@ echo '{"user":"admin","password":"supersecret"}' | npx jsonmask
 
 I wrote this after pasting a `kubectl get secrets -o json` output into a Slack DM. You know the feeling.
 
+<p align="center">
+  <img src="demo.svg" alt="jsonmask in action" width="600">
+</p>
+
 ## But actually, it's useful for
 
 - Logging debug output without leaking tokens
