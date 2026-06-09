@@ -1,44 +1,41 @@
 # jsonmask
 
-Pipe JSON through it. Sensitive fields get masked. Nothing gets committed by accident.
+[![npm](https://img.shields.io/npm/v/jsonmask)](https://www.npmjs.com/package/jsonmask) [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-```bash
-echo '{"user":"admin","password":"supersecret"}' | npx jsonmask
-# {
-#   "user": "admin",
-#   "password": "super********"
-# }
-```
-
-I wrote this after pasting a `kubectl get secrets -o json` output into a Slack DM. You know the feeling.
+Pipe JSON through it. Secrets get masked. Nothing leaks.
 
 <p align="center">
   <img src="demo.svg" alt="jsonmask in action" width="600">
 </p>
 
-## But actually, it's useful for
+---
 
-- Logging debug output without leaking tokens
+## Use cases
+
+- Debug logging without leaking tokens
 - Sharing API responses with colleagues
 - CI pipelines that dump JSON
 - Any `curl | jsonmask` situation
 
-## Quick ones
+---
+
+## Quick start
 
 ```bash
-# Mask everything (strict mode)
+# Basic usage
+echo '{"user":"admin","password":"supersecret"}' | npx jsonmask
+
+# Mask everything
 kubectl get secrets -o json | npx jsonmask -f all
 
 # Custom fields
 cat response.json | npx jsonmask -f ssn,credit_card,api_key
 
-# Pick your mask character
+# Custom mask character
 echo '{"token":"abc123"}' | npx jsonmask -c █
-
-# See what it considers sensitive
-npx jsonmask -l
-# → password, token, api_key, ssh_key, session, cookie...
 ```
+
+---
 
 ## Install
 
@@ -46,21 +43,25 @@ npx jsonmask -l
 # No install needed
 npx jsonmask --help
 
-# Or if you use it a lot
+# Or globally
 npm install -g jsonmask
 ```
 
+---
+
 ## Options
 
-```
--f, --fields    Fields to mask (comma-separated, or "all")
--i, --file      Read from file instead of stdin
--c, --char      Mask character                    [default: *]
--l, --list      List default sensitive fields
--h, --help      You know the drill
-```
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-f, --fields` | Fields to mask (comma-separated or `all`) | built-in list |
+| `-i, --file` | Read from file | stdin |
+| `-c, --char` | Mask character | `*` |
+| `-l, --list` | Show default sensitive fields | |
+| `-h, --help` | Show help | |
 
-**Default sensitive fields**: password, secret, token, api_key, access_key, private_key, auth, jwt, session, cookie, credit_card, ssn, ssh_key, and about 20 more. Run `jsonmask -l` for the full list.
+Runs with 20+ built-in field names: `password`, `secret`, `token`, `api_key`, `jwt`, `session`, `cookie`, `ssn`, `credit_card` and more.
+
+---
 
 ## License
 
