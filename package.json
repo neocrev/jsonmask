@@ -1,0 +1,22 @@
+{
+  "name": "jsonmask",
+  "version": "1.0.0",
+  "description": "Mask sensitive fields in JSON — pipe-safe, zero dependencies",
+  "bin": {
+    "jsonmask": "./bin/jsonmask.js"
+  },
+  "keywords": [
+    "json",
+    "mask",
+    "redact",
+    "secrets",
+    "logging",
+    "security",
+    "cli"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  }
+}
