@@ -1,101 +1,62 @@
 # jsonmask
 
-**Mask sensitive JSON fields in logs, debug output, and CI pipelines.**
-
-A zero-dependency CLI that redacts passwords, tokens, API keys, and other secrets from JSON — so you can safely log, share, or debug without leaking credentials.
-
-## Why?
-
-> "I accidentally committed a real API key in my debug log"
-
-jsonmask prevents this. Pipe any JSON through it, and sensitive fields get masked. Works with `curl`, `kubectl`, `aws CLI` — anything that outputs JSON.
-
-## Quick start
+Pipe JSON through it. Sensitive fields get masked. Nothing gets committed by accident.
 
 ```bash
-# Pipe JSON through jsonmask
 echo '{"user":"admin","password":"supersecret"}' | npx jsonmask
 # {
 #   "user": "admin",
 #   "password": "super********"
 # }
+```
 
-# Mask specific fields
-cat response.json | npx jsonmask -f ssn,credit_card
+I wrote this after pasting a `kubectl get secrets -o json` output into a Slack DM. You know the feeling.
 
-# Mask every string (strict mode)
+## But actually, it's useful for
+
+- Logging debug output without leaking tokens
+- Sharing API responses with colleagues
+- CI pipelines that dump JSON
+- Any `curl | jsonmask` situation
+
+## Quick ones
+
+```bash
+# Mask everything (strict mode)
 kubectl get secrets -o json | npx jsonmask -f all
+
+# Custom fields
+cat response.json | npx jsonmask -f ssn,credit_card,api_key
+
+# Pick your mask character
+echo '{"token":"abc123"}' | npx jsonmask -c █
+
+# See what it considers sensitive
+npx jsonmask -l
+# → password, token, api_key, ssh_key, session, cookie...
 ```
 
 ## Install
 
 ```bash
-# Use directly via npx (no install needed)
+# No install needed
 npx jsonmask --help
 
-# Or install globally
+# Or if you use it a lot
 npm install -g jsonmask
 ```
 
-## Usage
-
-```bash
-# Pipe mode (recommended)
-cat data.json | jsonmask
-curl -s https://api.example.com/data | jsonmask
-
-# File mode
-jsonmask -i response.json
-
-# Custom fields
-jsonmask -f password,token,secret
-
-# Mask all strings
-jsonmask -f all
-
-# Custom mask character
-jsonmask -c █
-
-# List default sensitive fields
-jsonmask -l
-```
-
-## Default sensitive fields
-
-`password`, `pass`, `pwd`, `secret`, `token`, `api_key`, `apikey`, `access_key`, `secret_key`, `private_key`, `auth`, `authorization`, `jwt`, `session`, `cookie`, `credit_card`, `ssn`, `ssh_key`, plus many more. Run `jsonmask -l` for the full list.
-
-## Examples
-
-### Safe logging
-
-```bash
-node app.js 2>&1 | jsonmask > app.log
-```
-
-### Kubernetes secrets (preview)
-
-```bash
-kubectl get secret my-secret -o json | jsonmask
-```
-
-### AWS CLI output
-
-```bash
-aws secretsmanager get-secret-value --secret-id my-secret | jsonmask
-```
-
-## API
+## Options
 
 ```
-Usage: jsonmask [options]
-
-Options:
-  -f, --fields    Fields to mask (comma-separated, or "all")  [default: built-in list]
-  -i, --file      Read from file instead of stdin
-  -c, --char      Mask character                              [default: *]
-  -l, --list      List default sensitive fields
-  -h, --help      Show help
+-f, --fields    Fields to mask (comma-separated, or "all")
+-i, --file      Read from file instead of stdin
+-c, --char      Mask character                    [default: *]
+-l, --list      List default sensitive fields
+-h, --help      You know the drill
 ```
+
+**Default sensitive fields**: password, secret, token, api_key, access_key, private_key, auth, jwt, session, cookie, credit_card, ssn, ssh_key, and about 20 more. Run `jsonmask -l` for the full list.
 
 ## License
 

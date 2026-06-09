@@ -1,7 +1,7 @@
 {
   "name": "jsonmask",
   "version": "1.0.0",
-  "description": "Mask sensitive fields in JSON — pipe-safe, zero dependencies",
+  "description": "Pipe-safe JSON masking for logs, debug output, and CI",
   "bin": {
     "jsonmask": "./bin/jsonmask.js"
   },
