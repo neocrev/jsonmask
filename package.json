@@ -1,5 +1,5 @@
 {
-  "name": "jsonmask",
+  "name": "@neocrev/jsonmask",
   "version": "1.0.0",
   "description": "Pipe-safe JSON masking for logs, debug output, and CI",
   "bin": {

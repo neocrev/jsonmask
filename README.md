@@ -1,7 +1,7 @@
 <p align="center">
   <h1>jsonmask</h1>
   <p>Pipe JSON through it. Secrets get masked. Nothing leaks.</p>
-  <a href="https://www.npmjs.com/package/jsonmask"><img src="https://img.shields.io/npm/v/jsonmask" alt="npm"></a>
+  <a href="https://www.npmjs.com/package/@neocrev/jsonmask"><img src="https://img.shields.io/npm/v/@neocrev/jsonmask" alt="npm"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License"></a>
 </p>
 
@@ -24,16 +24,16 @@
 
 ```bash
 # Basic usage
-echo '{"user":"admin","password":"supersecret"}' | npx jsonmask
+echo '{"user":"admin","password":"supersecret"}' | npx @neocrev/jsonmask
 
 # Mask everything
-kubectl get secrets -o json | npx jsonmask -f all
+kubectl get secrets -o json | npx @neocrev/jsonmask -f all
 
 # Custom fields
-cat response.json | npx jsonmask -f ssn,credit_card,api_key
+cat response.json | npx @neocrev/jsonmask -f ssn,credit_card,api_key
 
 # Custom mask character
-echo '{"token":"abc123"}' | npx jsonmask -c █
+echo '{"token":"abc123"}' | npx @neocrev/jsonmask -c █
 ```
 
 ---
@@ -42,10 +42,10 @@ echo '{"token":"abc123"}' | npx jsonmask -c █
 
 ```bash
 # No install needed
-npx jsonmask --help
+npx @neocrev/jsonmask --help
 
 # Or globally
-npm install -g jsonmask
+npm install -g @neocrev/jsonmask
 ```
 
 ---
