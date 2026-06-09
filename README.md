@@ -1,8 +1,9 @@
-# jsonmask
-
-[![npm](https://img.shields.io/npm/v/jsonmask)](https://www.npmjs.com/package/jsonmask) [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-
-Pipe JSON through it. Secrets get masked. Nothing leaks.
+<p align="center">
+  <h1>jsonmask</h1>
+  <p>Pipe JSON through it. Secrets get masked. Nothing leaks.</p>
+  <a href="https://www.npmjs.com/package/jsonmask"><img src="https://img.shields.io/npm/v/jsonmask" alt="npm"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License"></a>
+</p>
 
 <p align="center">
   <img src="demo.svg" alt="jsonmask in action" width="600">
